@@ -83,7 +83,7 @@ public class RoomNodeGraphEditor : EditorWindow
     {
         if (currentEvent.button == 1)
         {
-            ShowContextMenu(currentEvent.mousePosition);
+            ShowContext(currentEvent.mousePosition);
         }
     }
 
@@ -107,5 +107,14 @@ public class RoomNodeGraphEditor : EditorWindow
         roomNode.Initialise(new Rect(mousePosition, new Vector2(nodeWidth, nodeHeight)), currentoRoomNodeGraph, roomNodeType);
         AssetDatabase.AddObjectToAsset(roomNode, currentoRoomNodeGraph);
         AssetDatabase.SaveAssets();
+    }
+
+    private void DrawRoomNodes()
+    {
+        foreach (RoomNodeSO roomNode in currentoRoomNodeGraph.roomNodeList)
+        {
+            roomNode.Draw(roomNodeStyle);
+        }
+        GUI.changed = true;
     }
 }

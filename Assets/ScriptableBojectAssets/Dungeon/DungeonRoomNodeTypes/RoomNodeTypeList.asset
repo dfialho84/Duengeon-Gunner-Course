@@ -12,4 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12923984b1d9eaec6870e96e03ab951c, type: 3}
   m_Name: RoomNodeTypeList
   m_EditorClassIdentifier: Assembly-CSharp::RoomNodeTypeListSO
-  list: []
+  list:
+  - {fileID: 11400000, guid: 998c8353a060d5d36b89f820731f0d09, type: 2}
+  - {fileID: 11400000, guid: f2490203b6a0123a3b089c18570e33b6, type: 2}
+  - {fileID: 11400000, guid: 3ec9ccd1b9b223459a6b0113206ab02c, type: 2}
+  - {fileID: 11400000, guid: ca7c65928052b1d609af0a6fc07c98e1, type: 2}
+  - {fileID: 11400000, guid: 0344b8463799d72d7bca583e381dd191, type: 2}
+  - {fileID: 11400000, guid: 22856ba631494374d989a925491e94eb, type: 2}
+  - {fileID: 11400000, guid: c5ca7539343d8a4adb2afb1318b0eaa0, type: 2}
+  - {fileID: 11400000, guid: a1783efa70f332fb28d2a55db8265db2, type: 2}
+  - {fileID: 11400000, guid: ea854d587d78088948c1c37dcf1494d4, type: 2}
+  - {fileID: 11400000, guid: 1ecdc17c8422100d285916c1549c3dea, type: 2}
