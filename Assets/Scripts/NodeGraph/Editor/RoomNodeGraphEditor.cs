@@ -3,11 +3,13 @@ using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEditor.MPE;
 using UnityEngine.Splines;
+using System.Linq;
 
 public class RoomNodeGraphEditor : EditorWindow
 {
     private GUIStyle roomNodeStyle;
-    private static RoomNodeGraphSO currentoRoomNodeGraph;
+    private static RoomNodeGraphSO currentRoomNodeGraph;
+    private RoomNodeSO currentRoomNode = null;
     private RoomNodeTypeListSO roomNodeTypeList;
 
     private const float nodeWidth = 160f;
@@ -40,7 +42,7 @@ public class RoomNodeGraphEditor : EditorWindow
         if (roomNodeGraph != null)
         {
             OpenWindow();
-            currentoRoomNodeGraph = roomNodeGraph;
+            currentRoomNodeGraph = roomNodeGraph;
             return true;
         }
 
@@ -50,7 +52,7 @@ public class RoomNodeGraphEditor : EditorWindow
 
     private void OnGUI()
     {
-        if (currentoRoomNodeGraph != null)
+        if (currentRoomNodeGraph != null)
         {
             ProcessEvents(Event.current);
             DrawRoomNodes();
@@ -62,9 +64,34 @@ public class RoomNodeGraphEditor : EditorWindow
         }
     }
 
-    private void ProcessEvents(Event currentEvent)
+    private void ProcessEvents(Event currentEvent)        
     {
-        ProcessRoomNodeGraphEvents(currentEvent);
+        if (currentRoomNode == null || !currentRoomNode.isLeftClickDragging)
+        {
+            currentRoomNode = IsMouseOverRoomNode(currentEvent);
+        }
+
+
+        if (currentRoomNode == null)
+        {            
+            ProcessRoomNodeGraphEvents(currentEvent);
+        }
+        else
+        {
+            currentRoomNode.ProcessEvents(currentEvent);
+        }
+    }
+
+    private RoomNodeSO IsMouseOverRoomNode(Event currentEvent)
+    {
+        foreach (RoomNodeSO roomNode in currentRoomNodeGraph.roomNodeList.Reverse<RoomNodeSO>())
+        {
+            if (roomNode.rect.Contains(currentEvent.mousePosition))
+            {
+                return roomNode;
+            }
+        }
+        return null; 
     }
 
     private void ProcessRoomNodeGraphEvents(Event currentEvent)
@@ -103,15 +130,15 @@ public class RoomNodeGraphEditor : EditorWindow
     {
         Vector2 mousePosition = (Vector2)mousePositionObject;
         RoomNodeSO roomNode = ScriptableObject.CreateInstance<RoomNodeSO>();
-        currentoRoomNodeGraph.roomNodeList.Add(roomNode);
-        roomNode.Initialise(new Rect(mousePosition, new Vector2(nodeWidth, nodeHeight)), currentoRoomNodeGraph, roomNodeType);
-        AssetDatabase.AddObjectToAsset(roomNode, currentoRoomNodeGraph);
+        currentRoomNodeGraph.roomNodeList.Add(roomNode);
+        roomNode.Initialise(new Rect(mousePosition, new Vector2(nodeWidth, nodeHeight)), currentRoomNodeGraph, roomNodeType);
+        AssetDatabase.AddObjectToAsset(roomNode, currentRoomNodeGraph);
         AssetDatabase.SaveAssets();
     }
 
     private void DrawRoomNodes()
     {
-        foreach (RoomNodeSO roomNode in currentoRoomNodeGraph.roomNodeList)
+        foreach (RoomNodeSO roomNode in currentRoomNodeGraph.roomNodeList)
         {
             roomNode.Draw(roomNodeStyle);
         }
