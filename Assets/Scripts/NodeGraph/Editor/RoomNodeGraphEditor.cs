@@ -4,6 +4,7 @@ using UnityEditor.Callbacks;
 using UnityEditor.MPE;
 using UnityEngine.Splines;
 using System.Linq;
+using System.Diagnostics;
 
 public class RoomNodeGraphEditor : EditorWindow
 {
@@ -11,7 +12,7 @@ public class RoomNodeGraphEditor : EditorWindow
     private static RoomNodeGraphSO currentRoomNodeGraph;
     private RoomNodeSO currentRoomNode = null;
     private RoomNodeTypeListSO roomNodeTypeList;
-
+    private const float connectingLineWidth = 3f;
     private const float nodeWidth = 160f;
     private const float nodeHeight = 75f;
     private const int nodePadding = 25;
@@ -54,6 +55,7 @@ public class RoomNodeGraphEditor : EditorWindow
     {
         if (currentRoomNodeGraph != null)
         {
+            DrawDraggedLine();
             ProcessEvents(Event.current);
             DrawRoomNodes();
         }
@@ -61,6 +63,23 @@ public class RoomNodeGraphEditor : EditorWindow
         if (GUI.changed)
         {
             Repaint();
+        }
+    }
+
+    private void DrawDraggedLine()
+    {
+        if (currentRoomNodeGraph.linePosition != Vector2.zero)
+        {
+            Handles.DrawBezier(
+                currentRoomNodeGraph.roomNodeToDrawLineFrom.rect.center,
+                currentRoomNodeGraph.linePosition,
+                currentRoomNodeGraph.roomNodeToDrawLineFrom.rect.center,
+                currentRoomNodeGraph.linePosition,
+                Color.white,
+                null,
+                connectingLineWidth
+            );
+            GUI.changed = true;
         }
     }
 
@@ -72,7 +91,7 @@ public class RoomNodeGraphEditor : EditorWindow
         }
 
 
-        if (currentRoomNode == null)
+        if (currentRoomNode == null || currentRoomNodeGraph.roomNodeToDrawLineFrom != null)
         {            
             ProcessRoomNodeGraphEvents(currentEvent);
         }
@@ -101,9 +120,60 @@ public class RoomNodeGraphEditor : EditorWindow
             case EventType.MouseDown:
                 ProcessMouseDownEvent(currentEvent);
                 break;
+            case EventType.MouseUp:
+                ProcessMouseUpEvent(currentEvent);
+                break;
+            case EventType.MouseDrag:
+                ProcessMouseDragEvent(currentEvent);
+                break;
             default:
                 break;
         }
+    }
+
+    private void ProcessMouseUpEvent(Event currentEvent)
+    {
+        if (currentEvent.button == 1 && currentRoomNodeGraph.roomNodeToDrawLineFrom != null)
+        {
+            RoomNodeSO roomNode = IsMouseOverRoomNode(currentEvent);
+            if (roomNode != null)
+            {
+                if (currentRoomNodeGraph.roomNodeToDrawLineFrom.AddChildRoomNodeIDToRoomNode(roomNode.id))
+                {
+                    roomNode.AddParentRoomNodeIDToRoomNode(currentRoomNodeGraph.roomNodeToDrawLineFrom.id);
+                }
+            }
+            ClearLineDrag();    
+        }        
+    }
+
+    private void ClearLineDrag()
+    {
+        currentRoomNodeGraph.roomNodeToDrawLineFrom = null;
+        currentRoomNodeGraph.linePosition = Vector2.zero;
+        GUI.changed = true;
+    }
+
+    private void ProcessMouseDragEvent(Event currentEvent)
+    {
+        if (currentEvent.button == 1)
+        {
+            ProcessRightMouseDragEvent(currentEvent);
+        }
+    }
+
+    private void ProcessRightMouseDragEvent(Event currentEvent)
+    {
+        if (currentRoomNodeGraph.roomNodeToDrawLineFrom != null)
+        {
+            DragConnectingLine(currentEvent.delta);
+            GUI.changed = true;
+        }
+    }
+
+    private void DragConnectingLine(Vector2 delta)
+    {
+        currentRoomNodeGraph.linePosition += delta;
     }
 
     private void ProcessMouseDownEvent(Event currentEvent)

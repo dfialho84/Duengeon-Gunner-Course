@@ -23,5 +23,5 @@ public class GameResources : MonoBehaviour
     #region Tooltip
     [Tooltip("Populate with the Dungeon RoomNodeTypeListSO")]
     #endregion
-    public RoomNodeTypeListSO roomNodeTypeList;
+    public RoomNodeTypeListSO roomNodeTypeList; 
 }

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5899403279112203764
+--- !u!114 &-6802842933321041370
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12,19 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33c1ec64e79cb50c7b323c8b4ff5b063, type: 3}
   m_Name: RoomNode
   m_EditorClassIdentifier: Assembly-CSharp::RoomNodeSO
-  id: b49817fd-17fe-4719-af21-a62d091aa850
+  id: db70e36b-53e9-4c72-868e-b6222526ef60
   parentRoomNodeIDList: []
   childRoomNodeIDList: []
   roomNodeGraph: {fileID: 11400000}
-  roomNodeType: {fileID: 11400000, guid: 3ec9ccd1b9b223459a6b0113206ab02c, type: 2}
+  roomNodeType: {fileID: 11400000, guid: ea854d587d78088948c1c37dcf1494d4, type: 2}
   roomNodeTypeList: {fileID: 11400000, guid: f5aae77f734e97304b7c42502595a7d8, type: 2}
   rect:
     serializedVersion: 2
-    x: 274
-    y: 164
+    x: 753
+    y: 201
     width: 160
     height: 75
---- !u!114 &-4999298231585120824
+  isLeftClickDragging: 0
+  isSelected: 0
+--- !u!114 &-221724131507302136
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -36,7 +38,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33c1ec64e79cb50c7b323c8b4ff5b063, type: 3}
   m_Name: RoomNode
   m_EditorClassIdentifier: Assembly-CSharp::RoomNodeSO
-  id: 78fdb074-406d-4a0b-8f8c-e08f4452ce9b
+  id: d98e0783-5063-418a-b4b5-69873398aacf
   parentRoomNodeIDList: []
   childRoomNodeIDList: []
   roomNodeGraph: {fileID: 11400000}
@@ -44,34 +46,12 @@ MonoBehaviour:
   roomNodeTypeList: {fileID: 11400000, guid: f5aae77f734e97304b7c42502595a7d8, type: 2}
   rect:
     serializedVersion: 2
-    x: 395
-    y: 358
+    x: 228
+    y: 264
     width: 160
     height: 75
---- !u!114 &-675083269301090139
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33c1ec64e79cb50c7b323c8b4ff5b063, type: 3}
-  m_Name: RoomNode
-  m_EditorClassIdentifier: Assembly-CSharp::RoomNodeSO
-  id: cf2065d2-4a4a-4a4d-9c09-7f08282c5b24
-  parentRoomNodeIDList: []
-  childRoomNodeIDList: []
-  roomNodeGraph: {fileID: 11400000}
-  roomNodeType: {fileID: 11400000, guid: f2490203b6a0123a3b089c18570e33b6, type: 2}
-  roomNodeTypeList: {fileID: 11400000, guid: f5aae77f734e97304b7c42502595a7d8, type: 2}
-  rect:
-    serializedVersion: 2
-    x: 635
-    y: 252
-    width: 160
-    height: 75
+  isLeftClickDragging: 0
+  isSelected: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,7 +66,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RoomNodeGraphSO
   roomNodeTypeList: {fileID: 0}
   roomNodeList:
-  - {fileID: -5899403279112203764}
-  - {fileID: -675083269301090139}
-  - {fileID: -4999298231585120824}
+  - {fileID: -221724131507302136}
+  - {fileID: -6802842933321041370}
   roomNodeDictionary: []
+  roomNodeToDrawLineFrom: {fileID: 0}
+  linePosition: {x: 0, y: 0}
