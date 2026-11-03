@@ -1,10 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Callbacks;
-using UnityEditor.MPE;
-using UnityEngine.Splines;
 using System.Linq;
-using System.Diagnostics;
 
 public class RoomNodeGraphEditor : EditorWindow
 {
@@ -12,6 +9,7 @@ public class RoomNodeGraphEditor : EditorWindow
     private static RoomNodeGraphSO currentRoomNodeGraph;
     private RoomNodeSO currentRoomNode = null;
     private RoomNodeTypeListSO roomNodeTypeList;
+    private const float connectingLineArrowSize = 6f;
     private const float connectingLineWidth = 3f;
     private const float nodeWidth = 160f;
     private const float nodeHeight = 75f;
@@ -57,6 +55,7 @@ public class RoomNodeGraphEditor : EditorWindow
         {
             DrawDraggedLine();
             ProcessEvents(Event.current);
+            DrawRoomConnections();
             DrawRoomNodes();
         }
 
@@ -64,6 +63,70 @@ public class RoomNodeGraphEditor : EditorWindow
         {
             Repaint();
         }
+    }
+
+    private void DrawRoomConnections()
+    {
+        foreach (RoomNodeSO roomNode in currentRoomNodeGraph.roomNodeList)
+        {
+            if (roomNode.childRoomNodeIDList.Count > 0)
+            {
+                foreach (string childRoomNodeID in roomNode.childRoomNodeIDList)
+                {
+                    if (currentRoomNodeGraph.roomNodeDictionary.ContainsKey(childRoomNodeID))
+                    {
+                        DrawConnectionLine(roomNode, currentRoomNodeGraph.roomNodeDictionary[childRoomNodeID]);
+                        GUI.changed = true;
+                    }   
+                }
+            }
+        }
+    }
+
+    private void DrawConnectionLine(RoomNodeSO parentRoomNode, RoomNodeSO childRoomNodeSO)
+    {
+        Vector2 startPosition = parentRoomNode.rect.center;
+        Vector2 endPosition = childRoomNodeSO.rect.center;
+
+        Vector2 midPosition = (endPosition + startPosition) / 2f;
+        Vector2 direction = endPosition - startPosition;
+
+        Vector2 arrowTailPoint1 = midPosition - new Vector2(-direction.y, direction.x).normalized * connectingLineArrowSize;
+        Vector2 arrowTailPoint2 = midPosition + new Vector2(-direction.y, direction.x).normalized * connectingLineArrowSize;
+
+        Vector2 arrowHeadPoint = midPosition + direction.normalized * connectingLineArrowSize;
+
+        Handles.DrawBezier(
+            arrowHeadPoint,
+            arrowTailPoint1,
+            arrowHeadPoint,
+            arrowTailPoint1,
+            Color.white,
+            null,
+            connectingLineWidth
+        );
+
+        Handles.DrawBezier(
+            arrowHeadPoint,
+            arrowTailPoint2,
+            arrowHeadPoint,
+            arrowTailPoint2,
+            Color.white,
+            null,
+            connectingLineWidth
+        );
+
+        Handles.DrawBezier(
+            startPosition,
+            endPosition,
+            startPosition,
+            endPosition,
+            Color.white,
+            null,
+            connectingLineWidth
+        );
+        
+        GUI.changed = true;
     }
 
     private void DrawDraggedLine()
@@ -204,6 +267,7 @@ public class RoomNodeGraphEditor : EditorWindow
         roomNode.Initialise(new Rect(mousePosition, new Vector2(nodeWidth, nodeHeight)), currentRoomNodeGraph, roomNodeType);
         AssetDatabase.AddObjectToAsset(roomNode, currentRoomNodeGraph);
         AssetDatabase.SaveAssets();
+        currentRoomNodeGraph.OnValidate();
     }
 
     private void DrawRoomNodes()
