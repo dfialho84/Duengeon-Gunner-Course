@@ -15,7 +15,7 @@ public class RoomNodeGraphSO : ScriptableObject
     public Dictionary<string, RoomNodeSO> roomNodeDictionary = new Dictionary<string, RoomNodeSO>();
 
     private void Awake()
-    {
+    { 
         LoadRoomNodeDictionary();
     }
 
