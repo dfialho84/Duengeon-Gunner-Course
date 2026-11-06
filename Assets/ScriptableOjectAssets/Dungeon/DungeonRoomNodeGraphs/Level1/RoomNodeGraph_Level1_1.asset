@@ -152,15 +152,16 @@ MonoBehaviour:
   m_Name: RoomNode
   m_EditorClassIdentifier: Assembly-CSharp::RoomNodeSO
   id: 2974b84f-1937-4f92-909d-e70cb1b2bc07
-  parentRoomNodeIDList: []
+  parentRoomNodeIDList:
+  - 416b7718-8b61-4142-bc85-8189d0acf774
   childRoomNodeIDList: []
   roomNodeGraph: {fileID: 11400000}
-  roomNodeType: {fileID: 11400000, guid: ea854d587d78088948c1c37dcf1494d4, type: 2}
+  roomNodeType: {fileID: 11400000, guid: 998c8353a060d5d36b89f820731f0d09, type: 2}
   roomNodeTypeList: {fileID: 11400000, guid: f5aae77f734e97304b7c42502595a7d8, type: 2}
   rect:
     serializedVersion: 2
-    x: 405
-    y: 344
+    x: 363.74005
+    y: 302.78696
     width: 160
     height: 75
   isLeftClickDragging: 0
@@ -342,6 +343,8 @@ MonoBehaviour:
     value: {fileID: 7336488779741738995}
   - key: 416b7718-8b61-4142-bc85-8189d0acf774
     value: {fileID: 3844256082621348223}
+  - key: 2974b84f-1937-4f92-909d-e70cb1b2bc07
+    value: {fileID: -2997869861184011089}
   roomNodeToDrawLineFrom: {fileID: 0}
   linePosition: {x: 0, y: 0}
 --- !u!114 &2778373630629632705
@@ -387,7 +390,8 @@ MonoBehaviour:
   id: 0a10a986-45a1-4cb5-a090-5448556da75f
   parentRoomNodeIDList:
   - 02e4f91f-6d32-4f16-9c99-390e3b2a7f93
-  childRoomNodeIDList: []
+  childRoomNodeIDList:
+  - d4e3dde4-00e6-4e7b-bcef-217144e69a9a
   roomNodeGraph: {fileID: 11400000}
   roomNodeType: {fileID: 11400000, guid: 3ec9ccd1b9b223459a6b0113206ab02c, type: 2}
   roomNodeTypeList: {fileID: 11400000, guid: f5aae77f734e97304b7c42502595a7d8, type: 2}
@@ -412,8 +416,10 @@ MonoBehaviour:
   m_Name: RoomNode
   m_EditorClassIdentifier: Assembly-CSharp::RoomNodeSO
   id: 416b7718-8b61-4142-bc85-8189d0acf774
-  parentRoomNodeIDList: []
-  childRoomNodeIDList: []
+  parentRoomNodeIDList:
+  - d4e3dde4-00e6-4e7b-bcef-217144e69a9a
+  childRoomNodeIDList:
+  - 2974b84f-1937-4f92-909d-e70cb1b2bc07
   roomNodeGraph: {fileID: 11400000}
   roomNodeType: {fileID: 11400000, guid: 3ec9ccd1b9b223459a6b0113206ab02c, type: 2}
   roomNodeTypeList: {fileID: 11400000, guid: f5aae77f734e97304b7c42502595a7d8, type: 2}
@@ -521,8 +527,10 @@ MonoBehaviour:
   m_Name: RoomNode
   m_EditorClassIdentifier: Assembly-CSharp::RoomNodeSO
   id: d4e3dde4-00e6-4e7b-bcef-217144e69a9a
-  parentRoomNodeIDList: []
-  childRoomNodeIDList: []
+  parentRoomNodeIDList:
+  - 0a10a986-45a1-4cb5-a090-5448556da75f
+  childRoomNodeIDList:
+  - 416b7718-8b61-4142-bc85-8189d0acf774
   roomNodeGraph: {fileID: 11400000}
   roomNodeType: {fileID: 11400000, guid: a1783efa70f332fb28d2a55db8265db2, type: 2}
   roomNodeTypeList: {fileID: 11400000, guid: f5aae77f734e97304b7c42502595a7d8, type: 2}
