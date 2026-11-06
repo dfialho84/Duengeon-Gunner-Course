@@ -89,6 +89,7 @@ public class RoomNodeGraphEditor : EditorWindow
         {
             DrawBackgroundGrid(gridSmall, 0.2f, Color.gray);
             DrawBackgroundGrid(gridLarge, 0.3f, Color.gray);
+            DrawDraggedLine();
             ProcessEvents(Event.current);
             DrawRoomConnections();
             DrawRoomNodes();
